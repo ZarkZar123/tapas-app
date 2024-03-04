@@ -7,6 +7,18 @@ function handlePlates (event){
     // get user input and add to list
     let plate = addItems.item.value
     if(plate == '')return;
+    
+    let list =[]
+    plates.forEach(plateObj=>{
+           list.push(plateObj.text)
+        }
+        )
+
+        if(list.includes(plate)){
+            alert(`${plate} already exists`)
+            return;
+        }
+
     plates.push({text:plate,done:false})
     addItems.reset()
 
@@ -34,7 +46,6 @@ function handleDisplayList(plates=[]){
 function toggleDone(event){
     const element =event.target
    const plateIndex = element.dataset.index
-   console.log('heloo');
    plates[plateIndex].done = !plates[plateIndex].done
    localStorage.setItem('plates', JSON.stringify(plates))
     handleDisplayList(plates)
