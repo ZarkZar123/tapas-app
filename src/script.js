@@ -6,6 +6,7 @@ function handlePlates (event){
     event.preventDefault()
     // get user input and add to list
     let plate = addItems.item.value
+    if(plate == '')return;
     plates.push({text:plate,done:false})
     addItems.reset()
 
@@ -24,7 +25,7 @@ function handleDisplayList(plates=[]){
                 <label for='item${i}'>
                     <span>${plate.text}</span>
                 </label>
-                <button class='delete'> ❌ </button>
+                <button class='delete' onclick='deletePlate(event)' data-index=${i}> ❌ </button>
             </li>
             `
     }).join("")
@@ -35,8 +36,16 @@ function toggleDone(event){
    const plateIndex = element.dataset.index
    console.log('heloo');
    plates[plateIndex].done = !plates[plateIndex].done
-    console.log(plates);
    localStorage.setItem('plates', JSON.stringify(plates))
+    handleDisplayList(plates)
+
+}
+
+function deletePlate(event){
+    const element =event.target
+    const plateIndex = element.dataset.index
+    plates.splice(plateIndex,1)
+    localStorage.setItem('plates', JSON.stringify(plates))
     handleDisplayList(plates)
 
 }
